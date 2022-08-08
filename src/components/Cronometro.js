@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import DisplayComponent from './components/DisplayComponent';
-import BtnDisplay from './components/BtnDisplay';
-import Cronometro from './components/Cronometro';
-import './App.css';
+import DisplayComponent from './DisplayComponent';
+import BtnDisplay from './BtnDisplay';
 
-function App() {
+
+function Cronometro() {
   const [time, setTime] = useState({ms:0, s:0, m:0, h:0});
   const [interv, setInterv] = useState();
   const [estado, setEstado] = useState(0);
@@ -42,18 +41,26 @@ const stop = ()=>{
 const reiniciar = ()=>iniciar();
   
 const limpiar = ()=>{
-  setTime({ms:0, s:0, m:0, h:0})
-  setEstado(0)
+    clearInterval(interv);
+    setTime({ms:0, s:0, m:0, h:0})
+    setEstado(0)
 }
   return (
     <div className="main-section">
       <div className="clock-holder">
         <div className="stopwatch">
-          <Cronometro />
+          <DisplayComponent time={time}/>
+          <BtnDisplay 
+            start={iniciar}
+            stop={stop}
+            reset={limpiar}
+            resume = {reiniciar}
+            status={estado}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-export default App;
+export default Cronometro;
